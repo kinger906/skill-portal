@@ -1,13 +1,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: true },
-  modules: [],
-  css: [],
+  modules: ['@nuxtjs/tailwindcss'],
+  css: ['~/assets/css/main.css'],
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL || '',
-    blobReadWriteToken: process.env.BLOB_READ_WRITE_TOKEN || '',
+    adminPassword: process.env.ADMIN_PASSWORD || 'admin123',
     public: {
-      appName: '数据管理系统'
+      appName: 'Skill Portal'
     }
   },
   nitro: {

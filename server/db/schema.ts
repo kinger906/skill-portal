@@ -1,27 +1,33 @@
 import { query } from '../db'
 
 export async function ensureTable() {
+  // ADD skill tables
   await query(`
-    CREATE TABLE IF NOT EXISTS items (
+    CREATE TABLE IF NOT EXISTS skill_categories (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL UNIQUE,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `)
+
+  await query(`
+    CREATE TABLE IF NOT EXISTS skill_list (
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       description TEXT DEFAULT '',
-      status VARCHAR(50) DEFAULT 'active',
+      content TEXT NOT NULL,
+      view_count INTEGER DEFAULT 0,
+      download_count INTEGER DEFAULT 0,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `)
 
   await query(`
-    CREATE TABLE IF NOT EXISTS files (
-      id SERIAL PRIMARY KEY,
-      file_id VARCHAR(255) NOT NULL UNIQUE,
-      original_name VARCHAR(500) NOT NULL,
-      url TEXT NOT NULL,
-      size BIGINT NOT NULL DEFAULT 0,
-      mime_type VARCHAR(100) NOT NULL,
-      item_id INTEGER REFERENCES items(id) ON DELETE SET NULL,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    CREATE TABLE IF NOT EXISTS skill_category_map (
+      skill_id INTEGER REFERENCES skill_list(id) ON DELETE CASCADE,
+      category_id INTEGER REFERENCES skill_categories(id) ON DELETE CASCADE,
+      PRIMARY KEY (skill_id, category_id)
     )
   `)
 }
