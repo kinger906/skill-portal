@@ -1,5 +1,5 @@
 <template>
-  <div v-if="skill" class="max-w-4xl mx-auto py-10">
+  <div v-if="skill" class="max-w-7xl mx-auto py-10">
     <div class="mb-8">
       <NuxtLink to="/" class="text-slate-400 hover:text-orange-500 text-sm font-medium mb-6 inline-flex items-center gap-1 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>

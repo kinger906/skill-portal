@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     sql += ` AND (s.name ILIKE $${params.length} OR s.description ILIKE $${params.length})`
   }
   
-  sql += ` GROUP BY s.id ORDER BY s.created_at DESC`
+  sql += ` GROUP BY s.id ORDER BY s.view_count DESC, s.download_count DESC`
   
   const result = await query(sql, params)
   

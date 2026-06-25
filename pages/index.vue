@@ -28,48 +28,10 @@
           </button>
         </div>
       </div>
-
-      <!-- Categories Tags -->
-      <div class="flex flex-wrap justify-center gap-3 mt-10 max-w-4xl mx-auto px-4">
-        <button 
-          @click="selectedCategory = ''"
-          :class="['px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 border', !selectedCategory ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50']"
-        >
-          全部
-        </button>
-        <button 
-          v-for="cat in categories" 
-          :key="cat.id"
-          @click="selectedCategory = cat.id"
-          :class="['px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 border', selectedCategory === cat.id ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50']"
-        >
-          {{ cat.name }}
-        </button>
-      </div>
     </div>
 
     <!-- Main Content Area -->
     <div class="max-w-7xl mx-auto px-6 pb-20">
-      <!-- Top Bar (Hot tags & Sort) -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <div class="flex items-center gap-4 text-sm">
-          <span class="text-slate-500 font-medium">热门标签:</span>
-          <div class="flex gap-3 text-slate-600">
-            <span class="cursor-pointer hover:text-orange-500 transition-colors">Vue</span>
-            <span class="cursor-pointer hover:text-orange-500 transition-colors">React</span>
-            <span class="cursor-pointer hover:text-orange-500 transition-colors">Nuxt.js</span>
-            <span class="cursor-pointer hover:text-orange-500 transition-colors">TypeScript</span>
-          </div>
-        </div>
-        <div>
-          <select class="bg-transparent text-slate-600 font-medium focus:outline-none cursor-pointer text-sm">
-            <option>最多下载</option>
-            <option>最新发布</option>
-            <option>最多浏览</option>
-          </select>
-        </div>
-      </div>
-
       <!-- Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <NuxtLink 
@@ -80,13 +42,6 @@
         >
           <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-orange-500 transition-colors line-clamp-1">{{ skill.name }}</h3>
           <p class="text-slate-500 text-sm line-clamp-3 mb-4 flex-1 leading-relaxed">{{ skill.description }}</p>
-          
-          <!-- Tags -->
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span v-for="(cat, index) in skill.categories?.slice(0, 3)" :key="index" class="bg-slate-50 text-slate-600 border border-slate-100 px-3 py-1 rounded-md text-xs">
-              {{ cat.name }}
-            </span>
-          </div>
           
           <!-- Footer -->
           <div class="flex items-center justify-between text-xs text-slate-400 pt-4 border-t border-slate-50 mt-auto">
