@@ -68,5 +68,5 @@ All tables use the `skill_` prefix.
 - **Components**: Card-based list for skills, prominent search bar, clean markdown renderer for the detail page.
 
 ## 7. Cleanup
-- Remove the existing `items` and `files` tables from the DB schema initialization.
-- Remove `@vercel/blob` dependency and related code, as it's no longer needed.
+- Keep the existing `items` and `files` tables (other systems use them), but do not use them for the skill portal features.
+- Remove `@vercel/blob` dependency and related code from the *application layer*, as it's no longer needed for skills.
