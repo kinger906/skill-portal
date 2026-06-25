@@ -8,14 +8,39 @@ export default defineEventHandler(async (event) => {
   const content = body.content || ''
   
   // Auto-parse name and description
-  const nameMatch = content.match(/<name>(.*?)<\/name>/i) || content.match(/^#\s+(.*)/m)
-  const name = nameMatch ? nameMatch[1].trim() : 'Untitled Skill'
-  
-  const descMatch = content.match(/<description>(.*?)<\/description>/is)
-  let description = descMatch ? descMatch[1].trim() : ''
+  let name = 'Untitled Skill'
+  let description = ''
+
+  // Try to parse YAML Frontmatter (--- ... ---)
+  const frontmatterMatch = content.match(/^---\s*[\r\n]+([\s\S]*?)[\r\n]+---/);
+  if (frontmatterMatch) {
+    const fmContent = frontmatterMatch[1];
+    const nameFm = fmContent.match(/^name:\s*(.+)$/m);
+    if (nameFm) name = nameFm[1].trim();
+    
+    const descFm = fmContent.match(/^description:\s*(.+)$/m);
+    if (descFm) description = descFm[1].trim();
+  }
+
+  // Fallback 1: XML-like tags (<name>, <description>)
+  if (name === 'Untitled Skill') {
+    const nameMatch = content.match(/<name>(.*?)<\/name>/i);
+    if (nameMatch) name = nameMatch[1].trim();
+  }
   if (!description) {
-    // Fallback to first text paragraph
-    const lines = content.split('\n').filter((l: string) => l.trim() && !l.startsWith('#'))
+    const descMatch = content.match(/<description>(.*?)<\/description>/is);
+    if (descMatch) description = descMatch[1].trim();
+  }
+
+  // Fallback 2: Markdown headers and paragraphs
+  if (name === 'Untitled Skill') {
+    const nameMatch = content.match(/^#\s+(.*)/m);
+    if (nameMatch) name = nameMatch[1].trim();
+  }
+  
+  if (!description) {
+    // Fallback to first text paragraph after frontmatter/headers
+    const lines = content.split('\n').filter((l: string) => l.trim() && !l.startsWith('#') && l.trim() !== '---' && !l.startsWith('name:') && !l.startsWith('description:'))
     description = lines.length > 0 ? lines[0].substring(0, 200) : ''
   }
 
