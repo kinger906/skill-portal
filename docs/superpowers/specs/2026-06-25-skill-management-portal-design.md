@@ -68,5 +68,6 @@ All tables use the `skill_` prefix.
 - **Components**: Card-based list for skills, prominent search bar, clean markdown renderer for the detail page.
 
 ## 7. Cleanup
-- Keep the existing `items` and `files` tables (other systems use them), but do not use them for the skill portal features.
-- Remove `@vercel/blob` dependency and related code from the *application layer*, as it's no longer needed for skills.
+- Keep the existing `items` and `files` tables in the DB schema initialization (other systems use them).
+- **Delete all existing code** related to `items` and `files` (API routes under `server/api/items` and `server/api/files`, Vue components, pages, and composables). We will build the new skill management portal from a clean slate.
+- Remove `@vercel/blob` dependency and related code from the application layer.
